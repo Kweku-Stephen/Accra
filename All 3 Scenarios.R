@@ -41,7 +41,7 @@ model_26_45_85 <-
     function(data = ""){
       #control statement
       if(data[,1][1] != "1960-01-01")
-        subset(data, Date >= "2019-01-01" & Date <= "2100-12-31") else
+        subset(data, Date >= "2022-01-01" & Date <= "2100-12-31") else  # changed from 2019 to 2022-01-01
           data
     }
   ) 
@@ -94,7 +94,7 @@ gridExtra::grid.arrange(
                 aes(x = Date,y = Prcp, fill = "RCP45"), lwd = 0, method = "loess") +
     geom_smooth(data = AccRCP85,
                 aes(x = Date, y = Prcp, fill = "RCP85"), lwd = 0, method = "loess") +
-    geom_vline(xintercept = c(2018.9, 2050.9), lwd = 2, col = "black", lty = 2) +
+    geom_vline(xintercept = c(2021.9, 2050.9), lwd = 2, col = "black", lty = 2) +
     scale_fill_manual("",values = c("OBSERVED" = "darkblue", 
                                     "RCP26" = "red", 
                                     "RCP45" = "darkgreen",
@@ -102,10 +102,10 @@ gridExtra::grid.arrange(
     #scale_colour_manual(values = "darkblue", name = "OBSERVED") +
     scale_x_continuous(breaks = seq(1960,2100 ,by = 35), limits = c(1960, 2100)) +
     labs(subtitle = "Accra Rainfall", y = "Rainfall(mm)", x = "Year") +
-    theme(plot.subtitle = element_text(size = 21, hjust = 0, face = "bold"),
-          axis.text = element_text(size = 17),
-          axis.title = element_text(size = 19),
-          legend.text = element_text(size = 15)), 
+    theme(plot.subtitle = element_text(size = 23, hjust = 0, face = "bold"),
+          axis.text = element_text(size = 19),
+          axis.title = element_text(size = 21),
+          legend.text = element_text(size = 17)), 
   
   
   ggplot(data = Observed,aes(x = Date, y = Tmax)) +
@@ -130,10 +130,10 @@ gridExtra::grid.arrange(
     scale_x_continuous(breaks = seq(1960,2100 ,by = 35), limits = c(1960, 2100)) +
     labs(subtitle = "Accra Max Tmp", y = expression("Temperature("~degree*C*")"), 
          x = "Year") +
-    theme(plot.subtitle = element_text(size = 21, hjust = 0, face = "bold"),
-          axis.text = element_text(size = 17),
-          axis.title = element_text(size = 19),
-          legend.text = element_text(size = 15)),
+    theme(plot.subtitle = element_text(size = 23, hjust = 0, face = "bold"),
+          axis.text = element_text(size = 19),
+          axis.title = element_text(size = 21),
+          legend.text = element_text(size = 17)),
   
   
   ggplot(data = Observed,aes(x = Date, y = Tmin)) +
@@ -158,10 +158,10 @@ gridExtra::grid.arrange(
     scale_x_continuous(breaks = seq(1960, 2100 ,by = 35), limits = c(1960, 2100)) +
     labs(subtitle = "Accra Min Tmp", y = expression("Temperature("~degree*C*")"), 
          x = "Year") +
-    theme(plot.subtitle = element_text(size = 21, hjust = 0, face = "bold"),
-          axis.text = element_text(size = 17),
-          axis.title = element_text(size = 19),
-          legend.text = element_text(size = 15)),
+    theme(plot.subtitle = element_text(size = 23, hjust = 0, face = "bold"),
+          axis.text = element_text(size = 19),
+          axis.title = element_text(size = 21),
+          legend.text = element_text(size = 17)),
   
   ncol = 2, nrow = 2
 )
@@ -178,7 +178,7 @@ dev.off()
 #Mean Stats for Prcp, Tmax and Tmin for Accra(Observed and Projected)
 data.frame(
   Scenario = "Observed",
-  Date = "1960 - 2018",
+  Date = "1960 - 2021",
   Prcp = mean(unlist(Observed[, "Prcp"])),
   Tmax = mean(unlist(Observed[, "Tmax"])),
   Tmin = mean(unlist(Observed[, "Tmin"]))
@@ -186,28 +186,28 @@ data.frame(
   rbind(
     data.frame(
       Scenario = "RCP26",
-      Date = "2019 - 2050",
-      Prcp = mean(unlist(subset(AccRCP26, Date >= 2019 & Date <= 2050)[, "Prcp"])),
-      Tmax = mean(unlist(subset(AccRCP26, Date >= 2019 & Date <= 2050)[, "Tmax"])),
-      Tmin = mean(unlist(subset(AccRCP26, Date >= 2019 & Date <= 2050)[, "Tmin"]))
+      Date = "2021 - 2050",
+      Prcp = mean(unlist(subset(AccRCP26, Date >= 2021 & Date <= 2050)[, "Prcp"])),
+      Tmax = mean(unlist(subset(AccRCP26, Date >= 2021 & Date <= 2050)[, "Tmax"])),
+      Tmin = mean(unlist(subset(AccRCP26, Date >= 2021 & Date <= 2050)[, "Tmin"]))
     )
   ) %>% 
   rbind(
     data.frame(
       Scenario = "RCP45",
-      Date = "2019 - 2050",
-      Prcp = mean(unlist(subset(AccRCP45, Date >= 2019 & Date <= 2050)[, "Prcp"])),
-      Tmax = mean(unlist(subset(AccRCP45, Date >= 2019 & Date <= 2050)[, "Tmax"])),
-      Tmin = mean(unlist(subset(AccRCP45, Date >= 2019 & Date <= 2050)[, "Tmin"]))
+      Date = "2021 - 2050",
+      Prcp = mean(unlist(subset(AccRCP45, Date >= 2021 & Date <= 2050)[, "Prcp"])),
+      Tmax = mean(unlist(subset(AccRCP45, Date >= 2021 & Date <= 2050)[, "Tmax"])),
+      Tmin = mean(unlist(subset(AccRCP45, Date >= 2021 & Date <= 2050)[, "Tmin"]))
     )
   ) %>% 
   rbind(
     data.frame(
         Scenario = "RCP85",
-        Date = "2019 - 2050",
-        Prcp = mean(unlist(subset(AccRCP85, Date >= 2019 & Date <= 2050)[, "Prcp"])),
-        Tmax = mean(unlist(subset(AccRCP85, Date >= 2019 & Date <= 2050)[, "Tmax"])),
-        Tmin = mean(unlist(subset(AccRCP85, Date >= 2019 & Date <= 2050)[, "Tmin"]))
+        Date = "2021 - 2050",
+        Prcp = mean(unlist(subset(AccRCP85, Date >= 2021 & Date <= 2050)[, "Prcp"])),
+        Tmax = mean(unlist(subset(AccRCP85, Date >= 2021 & Date <= 2050)[, "Tmax"])),
+        Tmin = mean(unlist(subset(AccRCP85, Date >= 2021 & Date <= 2050)[, "Tmin"]))
     )
   ) %>% 
   rbind(
@@ -248,27 +248,28 @@ data.frame(
 data.frame(
   Data = "Observed",
   Variable = "Prcp",
-  `First half` = unlist(Observed[1:30, ][, "Prcp"]) %>% mean,
-  `Second Half` = unlist(Observed[31:nrow(Observed), ][, "Prcp"]) %>% mean
+  `First half` = unlist(Observed[1:31, ][, "Prcp"]) %>% mean,
+  `Second Half` = unlist(Observed[32:nrow(Observed), ][, "Prcp"]) %>% mean
 ) %>% 
   rbind(
     data.frame(
       Data = "Observed",
       Variable = "Tmax",
-      `First half` = unlist(Observed[1:30, ][, "Tmax"]) %>% mean,
-      `Second Half` = unlist(Observed[31:nrow(Observed), ][, "Tmax"]) %>% mean
+      `First half` = unlist(Observed[1:31, ][, "Tmax"]) %>% mean,
+      `Second Half` = unlist(Observed[32:nrow(Observed), ][, "Tmax"]) %>% mean
     )
   ) %>% 
   rbind(
     data.frame(
       Data = "Observed",
       Variable = "Tmin",
-      `First half` = unlist(Observed[1:30, ][, "Tmin"]) %>% mean,
-      `Second Half` = unlist(Observed[31:nrow(Observed), ][, "Tmin"]) %>% mean
+      `First half` = unlist(Observed[1:31, ][, "Tmin"]) %>% mean,
+      `Second Half` = unlist(Observed[32:nrow(Observed), ][, "Tmin"]) %>% mean
     )
   ) %>% 
   write.csv(
     file = "Stats for Observed Data for Accra.csv", row.names = FALSE)
+
 
 
 
